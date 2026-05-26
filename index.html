@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Message Animation</title>
+  <style>
+    .message {
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 100px;
+      opacity: 0;
+      animation: fadeUp 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="message">First Version Of applicaion V5</div>
+</body>
+</html>
