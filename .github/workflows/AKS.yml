@@ -22,3 +22,31 @@ jobs:
         - run: |
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
+
+   deploy:
+     runs-on: self-hosted
+     needs: build
+   
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v4
+   
+       - name: Azure Login
+         uses: azure/login@v1
+         with:
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
+   
+       - name: Get AKS Credentials
+         run: |
+           az aks get-credentials \
+             --resource-group Gh-Action-Test \
+             --name AKS-Gh-Action-Test \
+             --overwrite-existing
+   
+       - name: Replace image tag
+         run: |
+           sed -i 's|IMAGE_PLACEHOLDER|${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}|g' aks-deployment.yaml
+   
+       - name: Deploy
+         run: |
+           kubectl apply -f aks-deployment.yaml
