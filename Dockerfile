@@ -6,7 +6,7 @@ WORKDIR /src
 COPY ["DotnetVmDeployDemo.sln", "./"]
 COPY ["DemoApi/DemoApi.csproj", "DemoApi/"]
 
-# Restore dependencies
+# Restore  dependencies
 RUN dotnet restore "DemoApi/DemoApi.csproj"
 
 # Copy the rest of the source code
