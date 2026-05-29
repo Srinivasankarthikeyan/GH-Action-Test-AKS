@@ -21,6 +21,18 @@ jobs:
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
 
+        - name: 'Run Trivy vulnerability scan'
+          uses: aquasecurity/trivy-action@master
+          with:
+            image-ref: ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
+            format: 'sarif'
+            output: 'trivy-results.sarif'
+
+        - name: 'Upload Trivy report to GitHub Security'
+          uses: github/codeql-action/upload-sarif@v3
+          with:
+            sarif_file: 'trivy-results.sarif'
+
    deploy:
      runs-on: self-hosted
      needs: build
