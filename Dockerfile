@@ -1,5 +1,6 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+# VULNERABILITY TEST: Using older base image with known CVEs
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 COPY ["DotnetVmDeployDemo.sln", "./"]
