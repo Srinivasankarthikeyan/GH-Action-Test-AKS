@@ -46,3 +46,45 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+// Bugs added for testing
+using Microsoft.Data.SqlClient;
+
+app.MapGet("/users", (string name) =>
+{
+    string connString = "Server=localhost;Database=TestDb;Trusted_Connection=True;";
+
+    using SqlConnection conn = new SqlConnection(connString);
+    conn.Open();
+
+    string query = "SELECT * FROM Users WHERE Name = '" + name + "'";
+
+    SqlCommand cmd = new SqlCommand(query, conn);
+
+    return Results.Ok(query);
+});
+
+using System.Diagnostics;
+
+app.MapGet("/ping", (string host) =>
+{
+    Process.Start("ping", host);
+    return Results.Ok();
+});
+
+
+app.MapGet("/file", (string filename) =>
+{
+    var content = File.ReadAllText("/tmp/" + filename);
+    return content;
+});
+
+
+using System.Security.Cryptography;
+
+app.MapGet("/encrypt", () =>
+{
+    using var des = DES.Create();
+    return "Weak Encryption";
+});
+
