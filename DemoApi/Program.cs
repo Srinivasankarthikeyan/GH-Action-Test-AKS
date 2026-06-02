@@ -1,4 +1,3 @@
-using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Security.Cryptography;
 

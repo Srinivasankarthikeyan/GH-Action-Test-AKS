@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SvcAp87B0kM=",
+  "dgSpecHash": "lfaQPgpqdtU=",
   "success": true,
-  "projectFilePath": "C:\\DotnetVmDeployDemo\\DemoApi\\DemoApi.csproj",
+  "projectFilePath": "C:\\GH-Action-Test-AKS\\DemoApi\\DemoApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SrinivasanKarthikeya\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.26\\microsoft.aspnetcore.openapi.8.0.26.nupkg.sha512",
     "C:\\Users\\SrinivasanKarthikeya\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DotnetVmDeployDemo\\DemoApi\\DemoApi.csproj": {}
+    "C:\\GH-Action-Test-AKS\\DemoApi\\DemoApi.csproj": {}
   },
   "projects": {
-    "C:\\DotnetVmDeployDemo\\DemoApi\\DemoApi.csproj": {
+    "C:\\GH-Action-Test-AKS\\DemoApi\\DemoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DotnetVmDeployDemo\\DemoApi\\DemoApi.csproj",
+        "projectUniqueName": "C:\\GH-Action-Test-AKS\\DemoApi\\DemoApi.csproj",
         "projectName": "DemoApi",
-        "projectPath": "C:\\DotnetVmDeployDemo\\DemoApi\\DemoApi.csproj",
+        "projectPath": "C:\\GH-Action-Test-AKS\\DemoApi\\DemoApi.csproj",
         "packagesPath": "C:\\Users\\SrinivasanKarthikeya\\.nuget\\packages\\",
-        "outputPath": "C:\\DotnetVmDeployDemo\\DemoApi\\obj\\",
+        "outputPath": "C:\\GH-Action-Test-AKS\\DemoApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SrinivasanKarthikeya\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.421/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
