@@ -40,25 +40,6 @@ app.MapGet("/weatherforecast", () =>
 app.MapGet("/welcome", () => "Welcome to the Demo API! V1")
    .WithName("WelcomeApi");
 
-// VULNERABILITY TEST: Command injection vulnerability
-app.MapGet("/execute", (string command) =>
-{
-    // Unsafe - directly executing user input
-    var process = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-    {
-        FileName = "/bin/sh",
-        Arguments = $"-c {command}",
-        RedirectStandardOutput = true,
-        UseShellExecute = false
-    });
-    return "Executed";
-})
-.WithName("ExecuteCommand");
-
-// VULNERABILITY TEST: Hardcoded secrets
-var apiKey = "sk-1234567890abcdefghijklmnop"; // Hardcoded secret
-var dbPassword = "AdminPassword123!"; // Hardcoded credentials
-
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
