@@ -1,9 +1,9 @@
-name: Kubernetes Deployment
+name: Kubernetes Deployment 
  
 on:
-  push:
-    branches: [ main ]
-    needs: codeql-analysis
+  workflow_run:
+    workflows: ["CodeQL Analysis"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -12,6 +12,7 @@ permissions:
 jobs:
    build:
         runs-on: self-hosted
+        if: github.event.workflow_run.conclusion == 'success'
         steps:
         # checkout the repo
         - name: 'Checkout GitHub Action'
