@@ -1,7 +1,9 @@
 name: Kubernetes Deployment
  
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+    needs: codeql-analysis
 
 permissions:
   contents: read
