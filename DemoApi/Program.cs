@@ -1,7 +1,10 @@
+using Microsoft.Data.SqlClient;
+using System.Diagnostics;
+using System.Security.Cryptography;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,12 +21,14 @@ app.UseHttpsRedirection();
 
 var summaries = new[]
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    "Freezing", "Bracing", "Chilly", "Cool",
+    "Mild", "Warm", "Balmy", "Hot",
+    "Sweltering", "Scorching"
 };
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -31,60 +36,56 @@ app.MapGet("/weatherforecast", () =>
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
+
     return forecast;
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-// Add a new welcome API endpoint for testing
 app.MapGet("/welcome", () => "Welcome to the Demo API! V1")
    .WithName("WelcomeApi");
 
-app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// ====================================================
+// Intentional vulnerabilities for CodeQL testing
+// ====================================================
 
-// Bugs added for testing
-using Microsoft.Data.SqlClient;
-
+// SQL Injection
 app.MapGet("/users", (string name) =>
 {
-    string connString = "Server=localhost;Database=TestDb;Trusted_Connection=True;";
-
-    using SqlConnection conn = new SqlConnection(connString);
-    conn.Open();
-
-    string query = "SELECT * FROM Users WHERE Name = '" + name + "'";
-
-    SqlCommand cmd = new SqlCommand(query, conn);
+    string query =
+        "SELECT * FROM Users WHERE Name = '" + name + "'";
 
     return Results.Ok(query);
 });
 
-using System.Diagnostics;
-
+// Command Injection
 app.MapGet("/ping", (string host) =>
 {
     Process.Start("ping", host);
-    return Results.Ok();
+    return Results.Ok($"Pinging {host}");
 });
 
-
+// Path Traversal
 app.MapGet("/file", (string filename) =>
 {
     var content = File.ReadAllText("/tmp/" + filename);
     return content;
 });
 
-
-using System.Security.Cryptography;
-
+// Weak Encryption
 app.MapGet("/encrypt", () =>
 {
     using var des = DES.Create();
-    return "Weak Encryption";
+    return "Weak Encryption Enabled";
 });
 
+app.Run();
+
+record WeatherForecast(
+    DateOnly Date,
+    int TemperatureC,
+    string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
